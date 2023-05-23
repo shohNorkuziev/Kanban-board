@@ -1,12 +1,33 @@
+<template>
+  <div class="page">
+    <Droppable 
+      v-for="category in categories" 
+      :key="category.id" 
+      :category="category" 
+      @drop="onDrop"
+      class="droppable"
+    >
+      <Draggable 
+        v-for="item in items.filter(x => x.categoryId == category.id)" 
+        :key="item.id" 
+        :item="item"
+        class="draggable"
+      />
+    </Droppable>
+  </div>
+</template>
+
 <script>
-// import Draggable from './Draggable.vue';
+import Draggable from './components/Draggable.vue';
+import Droppable from './components/Droppable.vue';
 import { ref } from 'vue';
 
 export default {
   name: 'App',
-  // components: {
-  //   Draggable,
-  // },
+  components: {
+    Draggable,
+    Droppable
+  },
   setup() {
     const items = ref([
       {
@@ -37,23 +58,32 @@ export default {
     const categories = ref([
       {
         id:1,
-        title:'to do',
+        title:'Очередь',
         count_task:10
       },
       {
         id:2,
-        title:'in progress',
+        title:'Планирование',
         count_task:5
-      }
+      },
+      {
+        id:3,
+        title:'В работе',
+        count_task:5
+      },
+      {
+        id:4,
+        title:'Проверка',
+        count_task:5
+      },
+      {
+        id:5,
+        title:'Готово',
+        count_task:5
+      },
     ])
 
-    function onDragStart(event, item) {
-      event.dataTransfer.dropEffect = 'move'
-      event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('itemId', item.id)
-    }
-    function onDrop(event, categoryId) {
-      const itemId = parseInt(event.dataTransfer.getData('itemId'))
+    function onDrop(itemId, categoryId) {
       items.value = items.value.map(x=>{
         if(x.id === itemId)
         x.categoryId = categoryId
@@ -65,68 +95,18 @@ export default {
     return {
       items,
       categories,
-      onDragStart,
       onDrop
     }
   }
 }
 </script>
 
-<template>
-<div class="page">
-  <div 
-  v-for="category in categories" 
-  v-bind:key="category.id" 
-  @drop="onDrop($event,category.id)" 
-  class="droppable"
-  @dragover.prevent
-  @dragenter.prevent
-  >
-    <div class="title">{{ category.title }}</div>
-    <div class="count_task">{{ category.count_task }}</div>
-    <div 
-      v-for="item in items.filter(x => x.categoryId == category.id)" 
-      v-bind:key="item.id" 
-      @dragstart="onDragStart($event,item)" 
-      draggable="true"
-      class="draggable">
-      <div class="title">{{ item.title }}</div>
-      <div class="description">{{ item.description }}</div>
-      <div class="important">{{ item.important }}</div>
-      <div class="status">{{ item.status }}</div>
-    </div>
-  </div>
-</div>
-</template>
-
 <style>
 .page{
+  padding: 20px 20px;
   display: grid;
   justify-content: space-around;
-  grid-template-columns: 1fr 1fr;
-}
-.droppable {
-  width: 250px;
-  display: grid;
-  background-color: #101204;
-  color: #B6C2CF;
-  padding: 15px 15px;
-  gap: 10px;
-  grid-template-columns: 150px;
-  grid-template-rows: 20px 20px 1fr;
-  border-radius: 12px;
-}
-
-.draggable {
-  padding: 9px;
-  border-radius: 9px;
-  background-color: #22272B;
-  color: #B6C2CF;
-  display: grid;
-  gap: 5px;
-  width: 150px;
-  height: 130px;
-  justify-content: center;
-  align-items: center;
+  grid-template-columns:repeat(5, 1fr);
+  column-gap: 25px;
 }
 </style>

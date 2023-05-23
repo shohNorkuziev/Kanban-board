@@ -2,3 +2,32 @@
     margin:0px;
     padding:0px;
 }
+/* .page{
+    display: grid;
+    justify-content: space-around;
+    grid-template-columns: 1fr 1fr;
+  }
+  .droppable {
+    width: 250px;
+    display: grid;
+    background-color: #101204;
+    color: #B6C2CF;
+    padding: 15px 15px;
+    gap: 10px;
+    grid-template-columns: 150px;
+    grid-template-rows: 20px 20px 1fr;
+    border-radius: 12px;
+  }
+  
+  .draggable {
+    padding: 9px;
+    border-radius: 9px;
+    background-color: #22272B;
+    color: #B6C2CF;
+    display: grid;
+    gap: 5px;
+    width: 150px;
+    height: 130px;
+    justify-content: center;
+    align-items: center;
+  } */
