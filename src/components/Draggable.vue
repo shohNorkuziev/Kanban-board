@@ -1,19 +1,21 @@
 <template>
     <div 
-      @dragstart="onDragStart" 
+      @dragstart="onDragStart"
       draggable="true"
-      class="draggable">
+      class="draggable"
+      >
       <div class="title">{{ item.title }}</div>
       <div class="description">{{ item.description }}</div>
-      <div class="important">{{ item.important }}</div>
+      <div class="important">{{ item.responsible }}</div>
       <div class="status">{{ item.status }}</div>
     </div>
   </template>
   
   <script>
+  
   export default {
     props: {
-      item: Object
+      item: Object,
     },
     methods: {
       onDragStart(event) {
@@ -33,9 +35,10 @@
     color: #B6C2CF;
     display: grid;
     gap: 5px;
-    width: 150px;
-    height: 130px;
+    width: 90%;
     justify-content: center;
     align-items: center;
+    height: min-content; 
+
   }
   </style>

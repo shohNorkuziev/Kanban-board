@@ -27,13 +27,13 @@ export default {
 
 <style>
 .droppable {
-  display: grid;
+  display: flex;
   background-color: #101204;
   color: #B6C2CF;
   padding: 15px 15px;
   gap: 10px;
-  grid-template-columns: 150px;
-  grid-template-rows: 20px 20px 1fr;
   border-radius: 12px;
+  align-items: start;
+  flex-direction: column;
 }
 </style>
