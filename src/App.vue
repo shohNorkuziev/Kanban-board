@@ -1,4 +1,8 @@
 <template>
+  <header>
+    <button @click="showForm = true">Открыть форму</button>
+      <AddTask v-if="showForm" @onAddTask="addTask"> </AddTask>
+  </header>
   <div class="page">
     <Droppable v-for="category in categories" :key="category.id" :category="category" @drop="onDrop" class="droppable">
       <Draggable v-for="item in items.filter(x => x.categoryId == category.id)" :key="item.id" :item="item"
@@ -10,13 +14,15 @@
 <script>
 import Draggable from './components/Draggable.vue';
 import Droppable from './components/Droppable.vue';
+import AddTask from './components/AddTask.vue';
 import { ref, watch } from 'vue';
 
 export default {
   name: 'App',
   components: {
     Draggable,
-    Droppable
+    Droppable,
+    AddTask
   },
 
   setup() {
@@ -53,137 +59,149 @@ export default {
         status: 'Очередь',
         categoryId: 1
       },
-      {
-        id: 5,
-        title: 'fact',
-        description: 'Создать форму обратной связи проекта “Альянс”',
-        responsible: 'Frontend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 6,
-        title: 'mgtu',
-        description: 'Создать анимацию для кнопки входа в личный магазин проекта “Top”',
-        responsible: 'Frontend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 7,
-        title: 'mgtu',
-        description: 'Создать слайдер на главной странице проекта “Top”',
-        responsible: 'Frontend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 8,
-        title: 'kanban',
-        description: 'Реализовать запросы к базе данных, в которых выводится вся информация о клиентах проекта “Альянс”',
-        responsible: 'Backend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 9,
-        title: 'fact',
-        description: 'Исправить ошибку ввода данных с формы регистрации проекта “Альянс”. Логины не сохранятся в базе данных',
-        responsible: 'Backend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 10,
-        title: 'mgtu',
-        description: 'Создать компонент Битрикса вывода одного товара на экран проекта “Альянс”',
-        responsible: 'Backend-разработчик',
-        status: 'Очередь',
-        categoryId: 1
-      }, {
-        id: 11,
-        title: 'kanban',
-        description: 'Провести анализ данных компаний “Вкусно и запятая”',
-        responsible: 'Аналитик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 12,
-        title: 'fact',
-        description: 'Описание use cases проекта “Вкусно и запятая”',
-        responsible: 'Аналитик',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 13,
-        title: 'mgtu',
-        description: 'Отрисовать дизайн макета главной страницы проекта “Миа”',
-        responsible: 'Дизайнер',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 14,
-        title: 'mgtu',
-        description: 'Отрисовать логотип для проекта “Альянс”',
-        responsible: 'Дизайнер',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 15,
-        title: 'fact',
-        description: 'Отрисовать макет главной страницы проекта “Мир покупок”',
-        responsible: 'Дизайнер',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 16,
-        title: 'mgtu',
-        description: 'Провести пресейл проекта “Вкусно и запятая”',
-        responsible: 'Директор по продажам',
-        status: 'Очередь',
-        categoryId: 1
-      },
-      {
-        id: 17,
-        title: 'mgtu',
-        description: 'Закрыть вакансию “Маркетолог”',
-        responsible: 'hr-специалист',
-        status: 'Очередь',
-        categoryId: 1
-      }
+      // {
+      //   id: 5,
+      //   title: 'fact',
+      //   description: 'Создать форму обратной связи проекта “Альянс”',
+      //   responsible: 'Frontend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 6,
+      //   title: 'mgtu',
+      //   description: 'Создать анимацию для кнопки входа в личный магазин проекта “Top”',
+      //   responsible: 'Frontend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 7,
+      //   title: 'mgtu',
+      //   description: 'Создать слайдер на главной странице проекта “Top”',
+      //   responsible: 'Frontend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 8,
+      //   title: 'kanban',
+      //   description: 'Реализовать запросы к базе данных, в которых выводится вся информация о клиентах проекта “Альянс”',
+      //   responsible: 'Backend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 9,
+      //   title: 'fact',
+      //   description: 'Исправить ошибку ввода данных с формы регистрации проекта “Альянс”. Логины не сохранятся в базе данных',
+      //   responsible: 'Backend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 10,
+      //   title: 'mgtu',
+      //   description: 'Создать компонент Битрикса вывода одного товара на экран проекта “Альянс”',
+      //   responsible: 'Backend-разработчик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // }, {
+      //   id: 11,
+      //   title: 'kanban',
+      //   description: 'Провести анализ данных компаний “Вкусно и запятая”',
+      //   responsible: 'Аналитик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 12,
+      //   title: 'fact',
+      //   description: 'Описание use cases проекта “Вкусно и запятая”',
+      //   responsible: 'Аналитик',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 13,
+      //   title: 'mgtu',
+      //   description: 'Отрисовать дизайн макета главной страницы проекта “Миа”',
+      //   responsible: 'Дизайнер',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 14,
+      //   title: 'mgtu',
+      //   description: 'Отрисовать логотип для проекта “Альянс”',
+      //   responsible: 'Дизайнер',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 15,
+      //   title: 'fact',
+      //   description: 'Отрисовать макет главной страницы проекта “Мир покупок”',
+      //   responsible: 'Дизайнер',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 16,
+      //   title: 'mgtu',
+      //   description: 'Провести пресейл проекта “Вкусно и запятая”',
+      //   responsible: 'Директор по продажам',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // },
+      // {
+      //   id: 17,
+      //   title: 'mgtu',
+      //   description: 'Закрыть вакансию “Маркетолог”',
+      //   responsible: 'hr-специалист',
+      //   status: 'Очередь',
+      //   categoryId: 1
+      // }
     ])
     const categories = ref([
       {
         id: 1,
         title: 'Очередь',
-        count_task: countTask(1)
+        count_task: countTask(1),
+        bgColor:'#b3d8ff'
       },
       {
         id: 2,
         title: 'Планирование',
-        count_task: countTask(2)
+        count_task: countTask(2),
+        bgColor:'#9fc4ff'
       },
       {
         id: 3,
         title: 'В работе',
-        count_task: countTask(3)
+        count_task: countTask(3),
+        bgColor:'#7ac1ff'
       },
       {
         id: 4,
         title: 'Проверка',
-        count_task: countTask(4)
+        count_task: countTask(4),
+        bgColor:'#ff9b8f'
       },
       {
         id: 5,
         title: 'Готово',
-        count_task: countTask(5)
+        count_task: countTask(5),
+        bgColor:'#c5e1a5'
       },
     ])
+    
+    let showForm = ref(false)
+
+    const addTask = ({title,description,responsible}) =>{
+      items.value = [...items.value, {id: items.value[items.value.length - 1].id + 1, title, description, responsible ,status:'Очередь',  categoryId:1}]
+      showForm = false
+    }  
 
     function onDrop(itemId, categoryId) {
       items.value = items.value.map(x => {
@@ -220,6 +238,8 @@ export default {
       onDrop,
       countTask,
       checkStatus,
+      addTask,
+      showForm
     }
   }
 }

@@ -4,6 +4,7 @@
     class="droppable"
     @dragover.prevent
     @dragenter.prevent
+    :style="{backgroundColor:category.bgColor}"
     >
     <div class="title">{{ category.title }}</div>
     <div class="count_task">{{ category.count_task }}</div>
@@ -28,12 +29,20 @@ export default {
 <style>
 .droppable {
   display: flex;
-  background-color: #101204;
-  color: #B6C2CF;
-  padding: 15px 15px;
+  padding: 24px 24px;
   gap: 10px;
   border-radius: 12px;
   align-items: start;
   flex-direction: column;
+  border: 1px solid #D6D8DB;
+}
+.title{
+  font-family: Inter;
+font-size: 24px;
+font-weight: 700;
+line-height: 28px;
+letter-spacing: 0px;
+text-align: left;
+
 }
 </style>
